@@ -78,7 +78,6 @@ public class Chest : MonoBehaviour
             else
             {
                 random = Random.Range(1, 4);
-                Debug.Log(random);
                 switch (random)
                 {
                     case 1:

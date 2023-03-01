@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public Text damage;
     public Text explosiveShots;
     public Text projectileSpeed;
+    public Text bulletCount;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,6 @@ public class UIManager : MonoBehaviour
         damage.text = "Damage: " + playerShoot.bulletDamage.ToString();
         projectileSpeed.text = "Projectile Speed: " + playerShoot.projectile.projectileSpeed.ToString();
         if (!playerShoot.projectile.explosive){explosiveShots.text = "";} else {explosiveShots.text = "Explosive Shots";}
-
+        bulletCount.text = "Bullet Count: " + playerShoot.bulletCount.ToString();
     }
 }
