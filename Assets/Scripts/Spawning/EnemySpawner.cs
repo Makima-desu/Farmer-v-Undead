@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
             zombieObj.GetComponent<ZombieBehaviour>().moveSpeed = 4.5f + (Mathf.Sqrt(playerVar.killCount)) * 0.04f;
             zombieObj.GetComponent<ZombieBehaviour>().health = 4 + (Mathf.Sqrt(playerVar.killCount)) * Mathf.Sqrt(playerVar.level);
 
-            if (playerVar.level > 15)
+            if (playerVar.level >= 15)
             {
                 GameObject veteranZombieObj = Instantiate(veteranZombie, new Vector3(Random.Range(-20, -21), Random.Range(-20, 21), 0), transform.rotation);
                 veteranZombieObj.GetComponent<ZombieBehaviour>().player = player;
@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
                 veteranZombieObj.GetComponent<ZombieBehaviour>().health = 12 + (Mathf.Sqrt(playerVar.killCount)) * Mathf.Sqrt(playerVar.level);
                 
             }
-            if (playerVar.level > 50)
+            if (playerVar.level >= 50)
             {
                 GameObject bonesObj = Instantiate(bones, new Vector3(Random.Range(-20, -21), Random.Range(-20, 21), 0), transform.rotation);
                 bonesObj.GetComponent<ZombieBehaviour>().player = player;
