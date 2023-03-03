@@ -21,18 +21,23 @@ public class PlayerShoot : MonoBehaviour
     public float level;
 
     public float bulletDamage;
-    float offsetAngle = 10;
+    public float offsetAngle;
 
 
     // Start is called before the first frame update
     void Start()
     {
         // projectile = GetComponent<WeaponProjectile>();
+        offsetAngle = 10;
         bulletDamage = 2;
         killCount = 0;
         level = 1;
         projectile.projectileSpeed = 6;
         projectile.explosive = false;
+        projectile.shovelSprite = false;
+        projectile.spriteRenderer.sprite = projectile.bulletSprite;
+        projectile.transform.localScale = new Vector3(1, 1, 1);
+        projectile.piercing = false;
 
     }
 

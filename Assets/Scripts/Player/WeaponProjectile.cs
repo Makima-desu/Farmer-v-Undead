@@ -5,17 +5,25 @@ using UnityEngine;
 public class WeaponProjectile : MonoBehaviour
 {
     public Rigidbody2D body;
+    public SpriteRenderer spriteRenderer;
+    public Sprite shovel;
+    public Sprite bulletSprite;
     public GameObject bullet;
+
     public float projectileSpeed = 8;
     public bool explosive = false;
-    bool piercing;
+    public bool piercing;
+
     public float range = 5;
     float time;
+
+    public bool shovelSprite;
 
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         body.velocity = transform.right * projectileSpeed;
 
     }
@@ -40,15 +48,17 @@ public class WeaponProjectile : MonoBehaviour
         if (explosive)
         {
             Destroy(gameObject);
-            for (int i = 0; i < explosiveBullets; ++i)
+            if (collision.gameObject.layer != 8) 
             {
-                GameObject bulletObj = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, angle));
-                bulletObj.GetComponent<WeaponProjectile>().explosive = false;
-                bulletObj.GetComponent<WeaponProjectile>().piercing = true;
-                bulletObj.GetComponent<Rigidbody2D>().velocity = transform.right * projectileSpeed;;
-                angle += 36;
+                for (int i = 0; i < explosiveBullets; ++i)
+                {
+                    GameObject bulletObj = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, angle));
+                    bulletObj.GetComponent<WeaponProjectile>().explosive = false;
+                    bulletObj.GetComponent<WeaponProjectile>().piercing = true;
+                    bulletObj.GetComponent<Rigidbody2D>().velocity = transform.right * projectileSpeed;;
+                    angle += 36;
 
-
+                }
             }
 
         }
@@ -56,12 +66,25 @@ public class WeaponProjectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        if (!piercing) {Destroy(gameObject);}
-        if (collision.gameObject.layer == 8)
+        if (shovelSprite)
         {
-            Destroy(gameObject);
+            // check to see if the are zombies in the radius when the bullet colldies
+            var colliders = Physics2D.OverlapCircleAll(transform.position, 3.5f);
+            // for all zombies
+            foreach (var collider in colliders)
+            {
+                // if it matches the zombie layer
+                if (collider.gameObject.layer == 7)
+                {
+                    // initiate a hit from zombie behaviour function
+                    collider.gameObject.GetComponent<ZombieBehaviour>().zombieHit();
+
+                }
+            }
 
         }
+        if (!piercing) {Destroy(gameObject);}
+        if (collision.gameObject.layer == 8){Destroy(gameObject);}
 
     
     }

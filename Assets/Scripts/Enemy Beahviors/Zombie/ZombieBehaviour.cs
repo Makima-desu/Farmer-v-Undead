@@ -45,7 +45,6 @@ public class ZombieBehaviour : MonoBehaviour
 
         }
         
-        
     }
 
     private void FixedUpdate() 
@@ -57,13 +56,19 @@ public class ZombieBehaviour : MonoBehaviour
     
     }
 
+    public void zombieHit()
+    {
+        // get the player component to access bullet damage
+        animator.SetTrigger("Hit"); // set trigger of hit
+        health -= player.GetComponent<PlayerShoot>().bulletDamage;
+
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) 
     {
         if (collision.tag == "Player Bullet")
         {
-            // get the player component to access bullet damage
-            animator.SetTrigger("Hit"); // set trigger of hit
-            health -= player.GetComponent<PlayerShoot>().bulletDamage;
+            zombieHit();
 
         }
     

@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject player;
     public PlayerShoot playerVar;
     // spawnrate
-    public float spawnRate = 2;
+    public float spawnRate;
     float spawnTime = 0;
 
     Vector2 spawnPosition;
@@ -22,6 +22,8 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spawnRate = 1.5f;
+
 
     }
 
@@ -43,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
                 veteranZombieObj.GetComponent<ZombieBehaviour>().health = 12 + (Mathf.Sqrt(playerVar.killCount)) * Mathf.Sqrt(playerVar.level);
                 
             }
-            if (playerVar.level >= 50)
+            if (playerVar.level >= 35)
             {
                 GameObject bonesObj = Instantiate(bones, new Vector3(Random.Range(-20, -21), Random.Range(-20, 21), 0), transform.rotation);
                 bonesObj.GetComponent<ZombieBehaviour>().player = player;

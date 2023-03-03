@@ -41,16 +41,38 @@ public class Chest : MonoBehaviour
 
     void addBulletDamage()
     {
-        player.bulletDamage += Random.Range(0.5f, 5);
+        if (projectile.shovelSprite)
+        {
+            player.bulletDamage += Random.Range(10, 20);
+
+        }
+        else player.bulletDamage += Random.Range(0.5f, 5);
 
     }
 
     void addBulletCount()
     {
-        if (player.bulletCount < 20)
+        if (player.bulletCount < 20 && !projectile.shovelSprite || projectile.shovelSprite && player.bulletCount < 5)
         {
             player.bulletCount += 1;
 
+        }
+        else addBulletDamage();
+
+    }
+
+    void changeShovel()
+    {
+        if (!projectile.shovelSprite)
+        {
+            projectile.spriteRenderer.sprite = projectile.shovel;
+            if (player.bulletCount > 5) {player.bulletCount = 5;}
+            player.bulletDamage += 500;
+            projectile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            projectile.shovelSprite = true;
+            projectile.explosive = false;
+            projectile.piercing = true;
+            player.offsetAngle = 5;
         }
         else addBulletDamage();
 
@@ -61,18 +83,24 @@ public class Chest : MonoBehaviour
         if (collision.tag == "Player")
         {
             int random = Random.Range(0, 101);
+            Debug.Log(random);
             if (random >= 75 && random <= 80)
             {
-                if (!player.projectile.explosive)
+                if (!player.projectile.explosive && !projectile.shovelSprite)
                 {
                     player.projectile.explosive = true;
 
                 }
                 else addBulletDamage();
             }
-            else if (random > 80)
+            else if (random >= 80 && random < 95)
             {
                 addBulletCount();
+
+            }
+            else if (random >= 95)
+            {
+                changeShovel();
 
             }
             else
