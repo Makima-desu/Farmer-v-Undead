@@ -52,7 +52,7 @@ public class Chest : MonoBehaviour
 
     void addBulletCount()
     {
-        if (player.bulletCount < 20 && !projectile.shovelSprite || projectile.shovelSprite && player.bulletCount < 5)
+        if (player.bulletCount < 20 && !projectile.shovelSprite || projectile.shovelSprite && player.bulletCount < 10)
         {
             player.bulletCount += 1;
 
@@ -66,11 +66,10 @@ public class Chest : MonoBehaviour
         if (!projectile.shovelSprite)
         {
             projectile.spriteRenderer.sprite = projectile.shovel;
-            if (player.bulletCount > 5) {player.bulletCount = 5;}
+            if (player.bulletCount > 10) {player.bulletCount = 10;}
             player.bulletDamage += 500;
             projectile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             projectile.shovelSprite = true;
-            projectile.explosive = false;
             projectile.piercing = true;
             player.offsetAngle = 5;
         }
@@ -83,7 +82,6 @@ public class Chest : MonoBehaviour
         if (collision.tag == "Player")
         {
             int random = Random.Range(0, 101);
-            Debug.Log(random);
             if (random >= 75 && random <= 80)
             {
                 if (!player.projectile.explosive && !projectile.shovelSprite)

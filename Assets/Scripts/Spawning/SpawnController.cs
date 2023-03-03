@@ -25,11 +25,13 @@ public class SpawnController : MonoBehaviour
         {
             // get a random chance
             int random = Random.Range(0, 101);
-            // if chance exceeds 75 or technically < 25%
+            // if chance exceeds 50 or technically < 50%
             // spawn the chest
             if (random >= 50)
             {
-                GameObject chestObj = Instantiate(chest, new Vector3(Random.Range(-15, 16), Random.Range(-15, 16), 0), transform.rotation);
+                int area = Random.Range(1, 5);
+                Vector3 spawnPoint = new Vector3(Random.Range(0, GetComponentsInChildren<Transform>()[area].transform.position.x + 1), Random.Range(0, GetComponentsInChildren<Transform>()[area].transform.position.y + 1), 0);
+                GameObject chestObj = Instantiate(chest, spawnPoint, transform.rotation);
                 chestObj.GetComponent<Chest>().player = player;
 
             }
